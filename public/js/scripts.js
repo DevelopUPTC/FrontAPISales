@@ -1,0 +1,5 @@
+console.log('Script de Inicio')
+fetch('http://localhost:3000/customers')
+.then( resp => resp.json())
+.then( data => console.log(data))
+.catch(err=>console.log)
