@@ -6,4 +6,8 @@ routes.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'../views/index.html'))
 })
 
+routes.get('/add-bill',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../views/add-bill.html'))
+})
+
 module.exports = routes
