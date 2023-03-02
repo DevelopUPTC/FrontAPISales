@@ -1,4 +1,14 @@
-console.log('Script de Inicio')
+async function loadData(){
+    result = await fetch('http://localhost:3000/customers')
+    .then( res => res.json())
+    .then( res => res.data )
+    .catch( err => err )
+}
+
+console.log(`Ejecutando ${loadData()}i`)
+
+
+/*console.log('Script de Inicio')
 fetch('http://localhost:3000/customers')
 .then( resp => resp.json())
 .then( data => {
@@ -22,7 +32,4 @@ fetch('http://localhost:3000/customers')
     });
 })
 .catch(err=>console.log)
-
-document.getElementById('btnSend').addEventListener('click',()=>{
-    console.log('Enviar')
-})
+*/
