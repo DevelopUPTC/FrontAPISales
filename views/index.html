@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="js/scripts.js"></script>
 </head>
+
 <body>
     <h1>Ejemplo de Front</h1>
     <table border="1">
@@ -17,10 +20,37 @@
             </tr>
         </thead>
         <tbody id="tbody">
-            
+        
         </tbody>
     </table>
-    
-    <script src="js/scripts.js"></script>
-</body>
+    <script>
+        loadCustomers()
+        .then( data => {
+            if( data.result){
+                const tbody = document.getElementById('tbody')
+                data.data.forEach(element => {
+                    const row = document.createElement('tr')
+
+                    const colNit = document.createElement('td')
+                    colNit.appendChild( document.createTextNode(element.nit))
+                    row.append(colNit)
+
+                    const colName = document.createElement('td')
+                    colName.appendChild( document.createTextNode(element.name))
+                    row.append(colName)
+
+                    const colDate = document.createElement('td')
+                    colDate.appendChild( document.createTextNode(element.birthday))
+                    row.append(colDate)
+                    
+                    tbody.appendChild(row)
+                });
+            }else{
+                console.log('Ha habido un Error trayendo los datos')
+            }
+        })
+        .catch(err => {
+            console.log(`Error --> ${err}`)
+        })
+    </script>
 </html>

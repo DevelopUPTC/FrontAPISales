@@ -1,35 +1,48 @@
-async function loadData(){
-    result = await fetch('http://localhost:3000/customers')
-    .then( res => res.json())
-    .then( res => res.data )
-    .catch( err => err )
+
+function loadCustomers(){
+    return new Promise((resolve,reject)=>{
+        const data = fetch('http://localhost:3000/customers')
+        .then( res => res.json( ) )
+        .then( res => {
+            resolve( res )
+        })
+        .catch( err => reject( err ) )
+    })
 }
 
-console.log(`Ejecutando ${loadData()}i`)
+const loadValues = ()=>{
+    
+    const number = document.getElementById('number').value 
 
+    const valBill = parseInt(document.getElementById('valBill').value)
 
-/*console.log('Script de Inicio')
-fetch('http://localhost:3000/customers')
-.then( resp => resp.json())
-.then( data => {
-    const tbody = document.getElementById('tbody')
-    console.log(data)
-    data.data.forEach(element => {
-        const tr = document.createElement('tr')
+    const dateBill = document.getElementById('dateBill').value
 
-        const colCode = document.createElement('td')
-        colCode.appendChild(document.createTextNode(element.nit))
-        tr.appendChild(colCode)
+    const data = {"number":number, "dateBill":dateBill,"value":valBill}
 
-        const colName = document.createElement('td')
-        colName.appendChild(document.createTextNode(element.name))
-        tr.appendChild(colName)
+    return JSON.stringify(data)
+}
 
-        const colBirth = document.createElement('td')
-        colBirth.appendChild(document.createTextNode(element.birthday))
-        tr.appendChild(colBirth)
-        tbody.appendChild(tr)
-    });
-})
-.catch(err=>console.log)
-*/
+function sendCustomer(){
+    const data = loadValues()
+    const customer = document.getElementById('customer').value 
+
+    const URL = `http://localhost:3000/bills/${customer}`
+    fetch(URL,
+    {
+        method:'POST',
+        headers:{
+            "Content-Type": "application/json",
+        },
+        body:data
+    })
+    .then( resp => resp.json())
+    .then( data => {
+        if( data.result ){
+            alert('Todo Bien')
+        }else{
+            alert('[Error]-Factura ya Existe')
+        }
+    })
+    .catch(err => alert('Ohhh,algo ha pasado' + err))
+}
